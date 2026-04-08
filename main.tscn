@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://cdfdp6cgixxjk"]
+
+[ext_resource type="PackedScene" uid="uid://ceuu150fmggvr" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cmmb6404at5qd" path="res://spawn_location.gd" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://defdm2qdva75q" path="res://mob.tscn" id="4_lquwl"]
+[ext_resource type="FontFile" path="res://imported/Montserrat-Medium.ttf-e832861e4ad4110e172112dc430c04b0.fontdata" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://bq4lq2wbf1rkc" path="res://score_label.gd" id="6_272bh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h2yge"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
+albedo_color = Color(0.96862745, 0.54509807, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+albedo_color = Color(0.96862745, 0.54509807, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
+albedo_color = Color(0.96862745, 0.54509807, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
+albedo_color = Color(0.96862745, 0.54509807, 0, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1bvp3"]
+
+[sub_resource type="Theme" id="Theme_5vw27"]
+default_font = ExtResource("5_7mycd")
+default_font_size = 22
+
+[node name="Main" type="Node" unique_id=937428498]
+script = null
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1819751228]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=598253261]
+shape = SubResource("BoxShape3D_0xm2m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/CollisionShape3D" unique_id=983481127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_h2yge")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Ground/CollisionShape3D/MeshInstance3D" unique_id=1342450982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=810075790 instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+collision_mask = 6
+
+[node name="CameraPivot" type="Marker3D" parent="." unique_id=1114611617]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=2028089677]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
+projection = 1
+size = 19.0
+
+[node name="Cylinders" type="Node3D" parent="." unique_id=251430182]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders" unique_id=904140534]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 3, -9)
+mesh = SubResource("CylinderMesh_h2yge")
+surface_material_override/0 = SubResource("StandardMaterial3D_1bvp3")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders" unique_id=271727690]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 3, 11)
+mesh = SubResource("CylinderMesh_h2yge")
+surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders" unique_id=905946942]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, 10)
+mesh = SubResource("CylinderMesh_h2yge")
+surface_material_override/0 = SubResource("StandardMaterial3D_7mycd")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders" unique_id=1008619232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, -9)
+mesh = SubResource("CylinderMesh_h2yge")
+surface_material_override/0 = SubResource("StandardMaterial3D_272bh")
+metadata/_edit_group_ = true
+
+[node name="SpawnLocation" type="PathFollow3D" parent="." unique_id=847957045]
+script = ExtResource("3_1bvp3")
+mob_scene = ExtResource("4_lquwl")
+
+[node name="SpawnPath" type="PathFollow3D" parent="SpawnLocation" unique_id=1242790312]
+
+[node name="MobTimer" type="Timer" parent="." unique_id=743139893]
+wait_time = 0.5
+autostart = true
+
+[node name="MobDetector" type="Area3D" parent="." unique_id=383092243]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector" unique_id=1060555781]
+shape = SubResource("CylinderShape3D_1bvp3")
+
+[node name="UserInterface" type="Control" parent="." unique_id=2059794101]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="UserInterface" unique_id=1880197957]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 40.0
+offset_right = 167.0
+offset_bottom = 85.0
+theme = SubResource("Theme_5vw27")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score:0"
+script = ExtResource("6_272bh")
+
+[node name="Mob" parent="." unique_id=860205160 instance=ExtResource("4_lquwl")]
+
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="body_entered" from="MobDetector" to="." method="_on_mob_detector_body_entered"]

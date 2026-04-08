@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://defdm2qdva75q"]
+
+[ext_resource type="Script" uid="uid://c5wp01kn08qxe" path="res://mob.gd" id="1_nokgg"]
+[ext_resource type="PackedScene" uid="uid://bicorb7we351t" path="res://art/mob.glb" id="2_ubaqv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p11y5"]
+
+[node name="Mob" type="CharacterBody3D" unique_id=860205160 groups=["mob"]]
+script = ExtResource("1_nokgg")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=893310584]
+
+[node name="Character" parent="Pivot" unique_id=883214543 instance=ExtResource("2_ubaqv")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1387271403]
+shape = SubResource("BoxShape3D_p11y5")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=657116655 groups=["mob"]]
+aabb = AABB(-2, 0.999, -2, 4, 0.002, 4)
+
+[node name="Node3D" type="Node3D" parent="VisibleOnScreenNotifier3D" unique_id=1052294180]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]
